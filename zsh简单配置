@@ -1,0 +1,45 @@
+这一切都发生在昨天（2022/2/23）消失的学期第二课，太离谱啦
+zsh安装
+1、强烈建议使用18.04版本，我先使用的21版本，在使用agnoster主题和agnosterzak主题时，
+在已经安装了字体Powerline fonts的情况下，出现三角形对不齐的这一迷惑行为，可谓焦头烂额
+2、还是使用新版Ubuntu，当然使用bash，zsh可以用，但是还是使用别的主题吧
+3、安装过程：
+查看系统当前使用的shell
+echo $SHELL
+查看系统自带哪些shell
+cat /etc/shells
+安装
+apt install zsh -y
+安装完成后，安装oh-my-zsh
+教程来自 https://blog.csdn.net/LangLang1111111/article/details/121779043
+原地址被墙了
+更为使用国内的项目地址
+项目mirror地址： https://gitee.com/mirrors/oh-my-zsh
+
+以下命令功能下载修改过的oh-my-zsh的 install.sh 并执行，改变了文件中指向的git仓库从github移到gitee。
+
+1、via curl
+sh -c "$（curl -fsSL https://gitee.com/shmhlsy/oh-my-zsh-install.sh/raw/master/install.sh）"
+
+2、via wget
+sh -c "$（wget -O- https://gitee.com/shmhlsy/oh-my-zsh-install.sh/raw/master/install.sh）"
+
+zsh设为默认shell
+chsh -s /bin/zsh
+重启
+reboot
+个性化：
+oh-my-zsh仓库
+https://github.com/ohmyzsh/ohmyzsh
+修改配置文件
+sudo gedit ~ /.zshrc
+修改主题：
+ZSH_THEME="robbyrussell"
+在""中修改主题的名字
+教程来自 https://www.jianshu.com/p/ba782b57ae96
+（如果是oh-my-zsh内置的主题直接修改名字，如果不是可以参考这个 https://github.com/zakaziko99/agnosterzak-ohmyzsh-theme）
+安装powerline字体
+sudo apt-get install fonts-powerline
+
+
+差不多就是这样子
