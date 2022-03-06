@@ -1,0 +1,94 @@
+Debian11是英文环境
+
+1、安装locales
+把Debian设置中文环境，只是局部的，整个系统还是英文
+要支持区域设置，首先要安装locales软件包：
+apt-get install locales
+
+
+
+2、配置locate
+然后配置locales软件包：
+dpkg-reconfigure locales
+
+
+注意：这里有一个坑，会报错bash: dpkg-reconfigure: command not found
+pkg-reconfigure命令找不到
+根据官方man的说明，dpkg-reconfigure是一个用来重新配置已经安装好了的包的命令，
+使用方法很简单，只需要输入dpkg-reconfigure命令再加上所要重新配置的包的名称即可，
+比如我上面的命令就是想重新配置locales这个包。
+一番折腾之后发现，其实解决办法很简单，如果只是单纯的需要使用一下dpkg-reconfigure命令，
+哪直接输入dpkg-reconfigure命令的完整路径即可，比如说重新配置locales命令：
+/usr/sbin/dpkg-reconfigure locales
+但是其实这样在输入其他命令时还是会遇到明明命令存在但是还是提示command not found的情况，
+更好的解决办法就是，退出当前root用户，然后使用su -命令重新切换到root权限，相关命令如下：
+su -
+退出su用户用
+exit
+也就是su命令后面添加一个连字符或者说减号，根据官方man命令的说法，加上后面这个符号相当于使用root账户登录，
+会初始化对应的环境变量，也就是加载上/usr/sbin/目录。
+
+在界面中钩选上“zh_CN.UTF-8”即可。可能有同学会问，还有其它好多zh_CN啊，为什么不选呢？
+因为，有了UTF-8，还要其它做什么呢？
+具体教程：
+https://www.cnblogs.com/qiyuexin/p/6399098.html
+话说github怎么插入图片呢
+按下空格键是选择
+
+系统默认的区域注意别一时兴起选了“zh_CN.UTF-8”，之前讲过，
+我们的字符界面不需要区域设置，256个ASCII字符的“Posix C”即可。
+否则，就等着看字符界面一堆乱码吧。
+也就是先选择字符集，选zh_CN.utf-8,然后enter，接着选none，然后enter
+
+
+3、安装man中文手册
+教程：
+https://blog.csdn.net/zha6476003/article/details/84328257
+
+1、Debian / Ubuntu安装
+
+sudo apt update
+sudo apt install manpages-zh
+
+用这个方法安装就好，直接就是最新的，然后不要选择方法二中的那个路径，找不到的
+
+
+4、添加cman中文手册命令
+安装完成后使用教程：
+https://blog.csdn.net/sean908/article/details/89684650
+其中这个命令：
+LANG=zh_CN.UTF-8
+需要完成第一、二步才可以，不然会报错：
+manpath: can't set the locale; make sure $LC_* and $LANG are correct
+若没有完成第一二步，先这个：LANG=en_US.UTF-8
+还换回英文环境。后面完成cman后，就不需要切换语言环境啦。
+
+这个命令：
+alias cman='man -M /usr/share/man/zh_CN'
+如果需要系统启动时及生效, 可以写入用户家目录的.bashrc文件中，也就是不需要su，就直接在用户目录下打开就好
+而且只能用vim编辑，在最下面添加这个命令，添加完成后，
+https://blog.csdn.net/decisiveness/article/details/51967721
+每次修改.bashrc后，使用source 搜索~/.bashrc（或者 . ~/.bashrc）就可以立刻加载修改后的设置，使之生效。
+
+就可以直接：
+cman 查看中文手册
+man 查看英文手册。
+
+
+补充：
+查看locale命令：
+locale -a
+
+dpkg-reconfigure命令 是Debian Linux中重新配置已经安装过的软件包，
+可以将一个或者多个已安装的软件包传递给此指令，它将询问软件初次安装后的配置问题。
+当用户需要再次对软件包配置的时候，可以使用dpkg-reconfigure命令来对指定的软件包进行配置。
+教程：
+
+Linux下使用中文manpage, 同时使用中文/英文manpage
+https://blog.csdn.net/sean908/article/details/89684650
+
+debian 卸载软件的三种方法
+https://blog.csdn.net/ykf173/article/details/88940674
+
+Linux之man命令详解及中文汉化
+https://blog.csdn.net/zha6476003/article/details/84328257
