@@ -1,0 +1,33 @@
+南大计算机基础习题课2021讲义中结合man ccache，并不能完成ccache的配置
+还是借助了百度https://blog.51cto.com/yangzhiming/1185990
+确实是只需要修改~/.bashrc中，但是不是根据 man ccache
+具体的：
+$ sudo apt-get install ccache    (安装ccache)
+命令行启用ccache
+$vi ~/.bashrc
+export USE_CCACHE=1    
+:wq
+$ccache –M 50G
+$ ls /usr/lib/ccache  （会有很多g++、gcc的链接）
+$ export PATH=/usr/lib/ccache:$PATH  （如果不生效可添加该步）
+$ export CCACHE_DIR=/space/aa/.ccache  （不设置默认为~/.ccache）
+$ export CCACHE_LOGFILE=/space/aa/ccache.log  （指定ccache log，一般不用设）
+
+
+以上是别人的
+我采用的：
+$ sudo apt-get install ccache
+$vim ~/.bashrc
+export USE_CCACHE=1   
+export PATH=/usr/lib/ccache:$PATH 
+
+这样就好啦
+然后再
+source /.bashrc
+
+最后验证一下：
+which gcc
+原来是/usr/bin/gcc
+现在是/usr/lib/ccache/gcc
+不仅仅gcc的路径变啦，g++等等都变啦
+第二次编译速度确实快啦
